@@ -1,0 +1,54 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>threejs example</title>
+
+    <style>
+        body { margin: 0; }
+    </style>
+</head>
+<body>
+    <script src="js/three.js"></script>
+    <script>
+        //CRIANDO UMA CENA
+        const scene = new THREE.Scene();
+        //CRIANDO UMA CAMERA DE PERSPECITVA
+        // 75 - FOV
+        // INNERWIDT / INNERHEIGHT - ASPECT RATIO
+        // 0.1 - NEAR - MAIR PERTO QUE ISSO NÃO SERÁ RENDERIZADO
+        // 1000 - FAR - MAIS LONGE QUE ISSO NÃO SERÁ RENDERIZADO
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000)
+
+        //CRIANDO UM RENDERER WEBGL
+        const renderer = new THREE.WebGLRenderer()
+        //SETANDO O TAMANHO DO RENDERER PARA O TAMANHO DO BROWSER
+        renderer.setSize(window.innerWidth, window.innerHeight)
+        //ADICIONANDO O RENDERER PARA O DOM
+        document.body.appendChild(renderer.domElement)
+
+        //CRIANDO O CUBO COM BOX GEOMETRY - CONTÉM OS VÉRTICES E O FILL DO OBJETO
+        const geometry = new THREE.BoxGeometry();
+        //CRIANDO UM MATERIAL PARA COLORIR O CUBO
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
+        //CRIANDO UM MESH - OBJETO QUE VAI APLICAR O MATERIAL AO MODELO
+        const cube = new THREE.Mesh(geometry, material)
+        //ADICIONANDO O CUBO À CENA
+        scene.add(cube)
+
+        camera.position.z = 5
+
+        //RENDERIZANDO A CENA:
+        //ESSA FUNÇÃO CRIA UM LOOP QUE FAZ O RENDERIZADOR DESENHAR
+        //O CUBO TODA VEZ QUE A PÁGINA É RECARREGADA
+        function animate() {
+            requestAnimationFrame(animate)
+
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+
+            renderer.render(scene, camera)
+        }
+        animate();
+    </script>
+</body>
+</html>
